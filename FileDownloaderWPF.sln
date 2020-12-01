@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30621.155
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileDownloaderWPF", "FileDownloaderWPF\FileDownloaderWPF.csproj", "{268B264D-A140-4BFD-9638-40964470C422}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileDownloaderConsole", "..\FileDownloaderConsole\FileDownloaderConsole\FileDownloaderConsole.csproj", "{20577CF1-7981-4B70-BE43-13C87B810561}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{268B264D-A140-4BFD-9638-40964470C422}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{268B264D-A140-4BFD-9638-40964470C422}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{268B264D-A140-4BFD-9638-40964470C422}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{268B264D-A140-4BFD-9638-40964470C422}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20577CF1-7981-4B70-BE43-13C87B810561}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20577CF1-7981-4B70-BE43-13C87B810561}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20577CF1-7981-4B70-BE43-13C87B810561}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20577CF1-7981-4B70-BE43-13C87B810561}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {943DA95D-4200-45AE-AB71-12EADB9D9641}
+	EndGlobalSection
+EndGlobal

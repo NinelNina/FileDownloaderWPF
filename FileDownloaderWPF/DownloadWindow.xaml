@@ -3,11 +3,36 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:FileDownloaderWPF"
+        xmlns:local="clr-namespace:FileDownloaderWPF" xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="File downloader" Height="450" Width="800">
-    <Grid>
-        <DataGrid x:Name="dataGrid" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="400" Margin="10,10,0,0" VerticalAlignment="Top" Width="772" ColumnHeaderHeight="30" AutoGenerateColumns="False"/>
-        
+        Title="File downloader" Height="340" Width="800">
+
+    <Grid Margin="0,0,0,16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <ListView Grid.Row="0" Name="fileList" HorizontalAlignment="Stretch" Margin="10,10,10,0" VerticalAlignment="Stretch">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=FileName}" Width="340">Имя файла</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Size, StringFormat={}{0:0} Б}" Width="200">Размер, Б</GridViewColumn>
+                    <GridViewColumn Width="200">Прогресс, %
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid HorizontalAlignment="Center">
+                                    <ProgressBar x:Name="progressStatus" HorizontalAlignment="Center" Maximum="100" Width="150" Height="20" Value="{Binding Progress}"/>
+                                    <TextBlock Text="{Binding ElementName=progressStatus, Path=Value, StringFormat={}{0:0}%}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Grid>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Grid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+            <ProgressBar x:Name="fullProgress" HorizontalAlignment="Center" VerticalAlignment="Top" Width="678" Minimum="0" Maximum="100" Value="{Binding DownloadedFiles}"  Height="32" Margin="0,20,0,0"/>
+            <TextBlock Text="{Binding ElementName=fullProgress, Path=Value, StringFormat={}{0:0}%}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,20,0,0"/>
+        </Grid>
     </Grid>
 </Window>

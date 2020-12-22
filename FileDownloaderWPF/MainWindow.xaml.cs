@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Windows;
 using FileDownloaderConsole;
-//using Microsoft.Win32;
 
 namespace FileDownloaderWPF
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         string sourcePath;
         string destinationPath;
-        //public InputData inputData;
+        int numberOfParallelism = 0;
 
         public MainWindow()
         {
@@ -60,8 +56,17 @@ namespace FileDownloaderWPF
         {
             try
             {
-                DownloadWindow downloadWindow = new DownloadWindow(sourcePath, destinationPath);
-                downloadWindow.Show();
+                DownloadWindow downloadWindow;
+
+                if (numberOfParallelism != 0)
+                {
+                    downloadWindow = new DownloadWindow(sourcePath, destinationPath, numberOfParallelism);
+                }
+                else
+                {
+                    downloadWindow = new DownloadWindow(sourcePath, destinationPath);
+                }
+                    downloadWindow.Show();
 
                 Close();
             }
@@ -72,14 +77,6 @@ namespace FileDownloaderWPF
             }
         }
 
-        private void Clear()
-        {
-            inputPathTextBox.Text = "";
-
-
-            outputPathTextBox.Text = "";
-        }
-
         private void InputPathTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
             sourcePath = inputPathTextBox.Text;
@@ -88,6 +85,32 @@ namespace FileDownloaderWPF
         private void OutputPathTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
             destinationPath = outputPathTextBox.Text;
+        }
+
+        private void degreeOfParallelism_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            try
+            {
+                if (degreeOfParallelism.Text != null)
+                {
+                    numberOfParallelism = Convert.ToInt32(degreeOfParallelism.Text);
+                }
+            }
+            catch(Exception exception)
+            {
+                degreeOfParallelism.Text = "4";
+
+                Log.WriteToLog(exception);
+
+                MessageBox.Show(exception.Message, "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void clear_Click(object sender, RoutedEventArgs e)
+        {
+            inputPathTextBox.Text = "";
+            outputPathTextBox.Text = "";
+            degreeOfParallelism.Text = "4";
         }
     }
 }

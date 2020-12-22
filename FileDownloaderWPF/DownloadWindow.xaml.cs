@@ -1,18 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using FileDownloaderConsole;
 
 namespace FileDownloaderWPF
@@ -22,26 +11,24 @@ namespace FileDownloaderWPF
         private int fileDownloadedCount = 0;
         private int fileUndownloadedCount = 0;
         private int fullDownloadProgress = 0;
+        private int numberOfParallelism;
 
         private double numberOfFiles;
         public InputData inputData;
         private List<FileData> items;
 
-        void fullProgressWorker_DoWork(object sender, DoWorkEventArgs e)
+        public DownloadWindow(string sourcePath, string destinationPath, int degreeOfParallelism)
         {
-            do
-            {
-                (sender as BackgroundWorker).ReportProgress(fullDownloadProgress);
-                System.Threading.Thread.Sleep(100);
+            inputData = new InputData();
 
-            } while (fullDownloadProgress <= 100);
-        }
+            numberOfParallelism = degreeOfParallelism;
+            inputData.PathToOpen = sourcePath;
+            inputData.PathToSave = destinationPath;
 
-        void fullProgressWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            fullProgress.Value = e.ProgressPercentage;
-        }
+            InitializeComponent();
 
+            BeginDownloading();
+        }        
         public DownloadWindow(string sourcePath, string destinationPath)
         {
             inputData = new InputData();
@@ -57,11 +44,16 @@ namespace FileDownloaderWPF
         private void BeginDownloading()
         {
             inputData.Input();
-            numberOfFiles = inputData.numberOfFiles;
+            numberOfFiles = inputData.NumberOfFiles;
             
             items = new List<FileData>();
 
             FileDownloader fileDownloader = new FileDownloader();
+
+            if (numberOfParallelism != 0)
+            {
+                fileDownloader.SetDegreeOfParallelism(numberOfParallelism);
+            }
 
             fileDownloader.OnDownloaded += CountDownloadedFiles;
             fileDownloader.OnFailed += CountUndownloadedFiles;
@@ -151,12 +143,18 @@ namespace FileDownloaderWPF
                 progress = (int)Math.Round(downloadedBytesTemp * 100);
             }
 
+            WorkData workData = new WorkData();
+
             foreach (var item in items)
             {
                 if (item.FileID.Contains(fileId))
                 {
+                    workData.item = item;
+                    workData.progress = progress;
+
                     if (item.Size != 0)
                     {
+
                         item.Progress = progress;
                     }
                     else
@@ -168,6 +166,28 @@ namespace FileDownloaderWPF
                     return;
                 }
             }
+        }
+
+        public class WorkData
+        {
+            public FileData item;
+            public int progress;
+            public int totalValue;
+        }
+
+        void fullProgressWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            do
+            {
+                (sender as BackgroundWorker).ReportProgress(fullDownloadProgress);
+                System.Threading.Thread.Sleep(100);
+
+            } while (fullDownloadProgress <= 100);
+        }
+
+        void fullProgressWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            fullProgress.Value = e.ProgressPercentage;
         }
     }
 }

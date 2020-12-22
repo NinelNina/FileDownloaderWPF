@@ -8,11 +8,14 @@
         mc:Ignorable="d"
         Title="File downloader" Height="296.667" Width="800">
     <Grid Height="265" VerticalAlignment="Top">
+        <GroupBox Header="Дополнительные настройки" HorizontalAlignment="Left" Height="75" Margin="30,168,0,0" VerticalAlignment="Top" Width="283"/>
         <Button x:Name="inputPath" Content="Открыть список URL" HorizontalAlignment="Left" Margin="40,57,0,0" VerticalAlignment="Top" Width="167" Height="25" FontSize="16" Click="InputPath_Click"/>
         <Button x:Name="outputPath" Content="Сохранить как..." HorizontalAlignment="Left" Margin="40,122,0,0" VerticalAlignment="Top" Width="167" Height="25" FontSize="16" Click="OutputPath_Click"/>
         <TextBox x:Name="inputPathTextBox" HorizontalAlignment="Stretch" Height="25" TextWrapping="Wrap" FontSize="14" VerticalAlignment="Top" Margin="224,57,26,0" TextChanged="InputPathTextBox_TextChanged"/>
         <TextBox x:Name="outputPathTextBox" HorizontalAlignment="Stretch" Height="25" TextWrapping="Wrap" Text="" FontSize="14" VerticalAlignment="Top" Margin="224,122,26,0" TextChanged="OutputPathTextBox_TextChanged"/>
-        <Button x:Name="clean" Content="Очистить" HorizontalAlignment="Right" Margin="0,192,170,0" VerticalAlignment="Top" Width="116" Height="34" FontSize="16"/>
+        <Button x:Name="clear" Content="Очистить" HorizontalAlignment="Right" Margin="0,192,170,0" VerticalAlignment="Top" Width="116" Height="34" FontSize="16" Click="clear_Click"/>
         <Button x:Name="downloadButton" Content="Загрузить" HorizontalAlignment="Right" Margin="0,192,26,0" VerticalAlignment="Top" Width="116" Height="34" FontSize="16" Click="DownloadButton_Click"/>
+        <Label Content="Количество потоков" HorizontalAlignment="Left" Margin="52,192,0,0" VerticalAlignment="Top" FontSize="16" Width="167" Height="34"/>
+        <TextBox x:Name="degreeOfParallelism" HorizontalAlignment="Stretch" Height="34" TextWrapping="Wrap" Text="4" FontSize="16" VerticalAlignment="Top" Margin="224,192,514,0" TextChanged="degreeOfParallelism_TextChanged"/>
     </Grid>
 </Window>
